@@ -1,11 +1,8 @@
-# Joplin Plugin
+## Dida365 Joplin Plugin
 
-This is a template to create a new Joplin plugin.
+It syncs your conference style todo items to your dida365 applications automatically, and syncs the task status back to joplin from dida365 so that you can enjoy the notification from dida365 and mark task done in dida365.
 
-The main two files you will want to look at are:
-
-- `/src/index.ts`, which contains the entry point for the plugin source code.
-- `/src/manifest.json`, which is the plugin manifest. It contains information such as the plugin a name, version, etc.
+![](./screenshot/img.png)
 
 ## Building the plugin
 
