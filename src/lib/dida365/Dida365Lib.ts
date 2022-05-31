@@ -240,6 +240,9 @@ class Dida365Lib {
             if (subTask.startDate) {
                 subItem['startDate'] = subTask.startDate.toISOString();
                 subItem['isAllDay'] = true;
+            } else {
+                subItem['startDate'] = '';
+                subItem['isAllDay'] = false;
             }
             subItems.push(subItem);
         }

@@ -5,14 +5,16 @@ import {Dida365, DidaSubTask, DidaTask} from "./Dida365Lib";
 import {DIDA_IGNORE_NOTE_TAG_NAME, extractInfo, SOURCE_URL_DIDA_PREFIX, updateInfo} from "../../common";
 import {dida365Cache, Dida365WS} from "./dida365WS";
 
-let debounce_dealNote = debounce(async function() {
-    const currNote = await joplin.workspace.selectedNote();
+let debounce_dealNote = debounce(async function(currNote) {
     await syncNoteToDida365(currNote);
 }, 2500);
 
 export async function dida365_init() {
     const dws = new Dida365WS();
-    await joplin.workspace.onNoteChange(debounce_dealNote);
+    await joplin.workspace.onNoteChange(async function () {
+        const currNote = await joplin.workspace.selectedNote();
+        await debounce_dealNote(currNote);
+    });
 }
 
 /*
