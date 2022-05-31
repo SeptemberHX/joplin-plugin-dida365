@@ -8,7 +8,7 @@ import {dida365Cache, Dida365WS} from "./dida365WS";
 let debounce_dealNote = debounce(async function() {
     const currNote = await joplin.workspace.selectedNote();
     await syncNoteToDida365(currNote);
-}, 5000);
+}, 2500);
 
 export async function dida365_init() {
     const dws = new Dida365WS();
@@ -74,11 +74,6 @@ export async function syncNoteToDida365(currNote) {
         subDidaTasks.push(subDidaTask);
     }
 
-    // Not support joplin todo note! We only accept the notes with todo items in note body
-    if (subDidaTasks.length === 0) {
-        return;
-    }
-
     let didaTask = new DidaTask();
     didaTask.id = extractInfo(currNote.source_url)[SOURCE_URL_DIDA_PREFIX];
     didaTask.items = subDidaTasks;
@@ -105,6 +100,11 @@ export async function syncNoteToDida365(currNote) {
 async function syncTaskToDida365(didaTask: DidaTask) {
     if (!didaTask.id || !dida365Cache.get(didaTask.id)) {   // we need create new remote task here
         if (didaTask.status === 2) {                        // ignore the finished task
+            return;
+        }
+
+        // Not support joplin todo note! We only accept the notes with todo items in note body
+        if (didaTask.items.length === 0) {
             return;
         }
 
