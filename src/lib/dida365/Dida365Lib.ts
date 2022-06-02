@@ -234,15 +234,15 @@ class Dida365Lib {
             let subItem = {
                 "id": subTask.id,
                 "title": subTask.title,
-                "status": subTask.status
+                "status": subTask.status,
+                "isAllDay": null
             };
 
             if (subTask.startDate) {
                 subItem['startDate'] = subTask.startDate.toISOString();
                 subItem['isAllDay'] = true;
             } else {
-                subItem['startDate'] = '';
-                subItem['isAllDay'] = false;
+                subItem['startDate'] = -1;
             }
             subItems.push(subItem);
         }
@@ -356,6 +356,9 @@ class Dida365Lib {
                 subTask.id = subItem.id;
                 subTask.title = subItem.title;
                 subTask.status = subItem.status;
+                if (subItem.startDate) {
+                    subTask.startDate = new Date(subItem.startDate);
+                }
                 task.items.push(subTask);
             }
         }
